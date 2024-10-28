@@ -2,6 +2,7 @@ package daily_diet.demo.application.services;
 
 import daily_diet.demo.application.dto.MealDTO;
 import daily_diet.demo.application.dto.MealDTOGet;
+import daily_diet.demo.application.services.erros.MealNotFoundError;
 import daily_diet.demo.application.services.erros.UserNotFoundError;
 import daily_diet.demo.domain.entities.Meal;
 import daily_diet.demo.domain.entities.User;
@@ -12,6 +13,7 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 import java.util.stream.Stream;
 
 @Service
@@ -29,9 +31,9 @@ public class MealService {
     public Stream<MealDTOGet> getAllMeals() {
 
         List<Meal> meals = mealRepository.findAll();
-        List<MealDTOGet> mealDTOGets = new ArrayList<>();
 
         Stream<MealDTOGet> mappedMeals =  meals.stream().map(meal -> new MealDTOGet(
+                meal.getId(),
                 meal.getName(),
                 meal.getDescription(),
                 meal.getIsHealthy(),
@@ -55,5 +57,15 @@ public class MealService {
         meal.setIsHealthy(mealDTO.getIsHealthy());
         meal.setUser(user.get());
         mealRepository.save(meal);
+    }
+
+    public void deleteMeal(UUID id) {
+        Optional<Meal> meal = mealRepository.findById(id);
+
+        if(meal.isEmpty()) {
+            throw new MealNotFoundError();
+        }
+
+        mealRepository.deleteById(id);
     }
 }

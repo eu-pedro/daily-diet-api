@@ -11,6 +11,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.UUID;
 import java.util.stream.Stream;
 
 @RestController
@@ -31,5 +32,12 @@ public class MealController {
         mealService.createMeal(meal);
 
         return ResponseEntity.status(HttpStatus.CREATED).build();
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity delete(@PathVariable UUID id) {
+        mealService.deleteMeal(id);
+
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
 }
