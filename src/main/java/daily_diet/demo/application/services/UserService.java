@@ -26,7 +26,6 @@ public class UserService {
            throw new UserAlreadyExistsError();
        }
 
-
        User user = new User();
        user.setName(userDTO.getName());
        user.setUsername(userDTO.getUsername());

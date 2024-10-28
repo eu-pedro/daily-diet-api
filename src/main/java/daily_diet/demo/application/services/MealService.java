@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Stream;
 
 @Service
 public class MealService {
@@ -25,12 +26,20 @@ public class MealService {
     private final MealRepository mealRepository;
 
 
-    public List<MealDTOGet> getAllMeals() {
+    public Stream<MealDTOGet> getAllMeals() {
 
         List<Meal> meals = mealRepository.findAll();
         List<MealDTOGet> mealDTOGets = new ArrayList<>();
 
-        return mealDTOGets;
+        Stream<MealDTOGet> mappedMeals =  meals.stream().map(meal -> new MealDTOGet(
+                meal.getName(),
+                meal.getDescription(),
+                meal.getIsHealthy(),
+                meal.getUser().getId()
+        ));
+
+        return mappedMeals;
+
     }
 
     public void createMeal (MealDTO mealDTO) {

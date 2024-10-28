@@ -11,6 +11,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.stream.Stream;
 
 @RestController
 @RequestMapping("/meal")
@@ -21,7 +22,7 @@ public class MealController {
 
     @GetMapping("")
     public ResponseEntity getAll() {
-        List<MealDTOGet> meals = mealService.getAllMeals();
+        Stream<MealDTOGet> meals = mealService.getAllMeals();
         return ResponseEntity.status(HttpStatus.OK).body(meals);
     }
 
