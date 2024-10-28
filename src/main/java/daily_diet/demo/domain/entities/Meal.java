@@ -1,5 +1,7 @@
 package daily_diet.demo.domain.entities;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.Data;
 import org.hibernate.annotations.CreationTimestamp;
@@ -28,5 +30,7 @@ public class Meal {
     private LocalDateTime createdAt;
 
     @ManyToOne
+    @JoinColumn(name = "user_id")
+    @JsonBackReference
     private User user;
 }
