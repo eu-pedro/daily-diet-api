@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDateTime;
 import java.util.UUID;
 
 @Data
@@ -16,11 +17,13 @@ public class MealDTOGet {
         meal.setName(meal.getName());
         meal.setDescription(meal.getDescription());
         meal.setIsHealthy(meal.getIsHealthy());
+        meal.setCreatedAt(meal.getCreatedAt());
         meal.setId(meal.getId());
     }
     private UUID id;
     private String name;
     private String description;
     private Boolean isHealthy;
+    private LocalDateTime createdAt;
     private UUID userId;
 }

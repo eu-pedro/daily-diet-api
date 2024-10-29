@@ -11,6 +11,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 import java.util.stream.Stream;
 
@@ -23,7 +24,7 @@ public class MealController {
 
     @GetMapping("")
     public ResponseEntity getAll() {
-        Stream<MealDTOGet> meals = mealService.getAllMeals();
+        Map meals = mealService.getAllMeals();
         return ResponseEntity.status(HttpStatus.OK).body(meals);
     }
 

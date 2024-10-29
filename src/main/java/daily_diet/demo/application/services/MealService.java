@@ -10,10 +10,9 @@ import daily_diet.demo.infra.adapters.repository.MealRepository;
 import daily_diet.demo.infra.adapters.repository.UserRepository;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
-import java.util.UUID;
+import java.time.format.DateTimeFormatter;
+import java.util.*;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 @Service
@@ -28,19 +27,28 @@ public class MealService {
     private final MealRepository mealRepository;
 
 
-    public Stream<MealDTOGet> getAllMeals() {
+    public Map getAllMeals() {
 
         List<Meal> meals = mealRepository.findAll();
 
-        Stream<MealDTOGet> mappedMeals =  meals.stream().map(meal -> new MealDTOGet(
-                meal.getId(),
-                meal.getName(),
-                meal.getDescription(),
-                meal.getIsHealthy(),
-                meal.getUser().getId()
-        ));
+        // Formatter para extrair a data no formato desejado
+        DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 
-        return mappedMeals;
+        // Mapeia as refeições para MealDTOGet e agrupa por data
+        Map<String, List<MealDTOGet>> mealsByDate = meals.stream()
+                .map(meal -> new MealDTOGet(
+                        meal.getId(),
+                        meal.getName(),
+                        meal.getDescription(),
+                        meal.getIsHealthy(),
+                        meal.getCreatedAt(),
+                        meal.getUser().getId()
+                ))
+                .collect(Collectors.groupingBy(
+                        mealDTO -> mealDTO.getCreatedAt().toLocalDate().format(dateFormatter)
+                ));
+
+        return mealsByDate;
 
     }
 
