@@ -1,12 +1,10 @@
 package daily_diet.demo.application.services;
-
 import daily_diet.demo.application.dto.UserDTO;
 import daily_diet.demo.application.services.erros.UserAlreadyExistsError;
 import daily_diet.demo.application.services.erros.UserNotFoundError;
 import daily_diet.demo.domain.entities.User;
 import daily_diet.demo.infra.adapters.repository.UserRepository;
 import org.springframework.stereotype.Service;
-
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;

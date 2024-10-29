@@ -41,4 +41,11 @@ public class MealController {
 
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
+
+    @GetMapping("/{id}/best-helthy-sequence")
+    public ResponseEntity getBestHealthyMealSequence(@PathVariable UUID id) {
+        Map<String, Integer> bestSequence = mealService.getBestHealthyMealSequence(id);
+
+        return ResponseEntity.status(HttpStatus.OK).body(bestSequence);
+    }
 }

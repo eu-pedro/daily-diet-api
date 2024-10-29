@@ -1,5 +1,4 @@
 package daily_diet.demo.application.services;
-
 import daily_diet.demo.application.dto.MealDTO;
 import daily_diet.demo.application.dto.MealDTOGet;
 import daily_diet.demo.application.services.erros.MealNotFoundError;
@@ -9,11 +8,9 @@ import daily_diet.demo.domain.entities.User;
 import daily_diet.demo.infra.adapters.repository.MealRepository;
 import daily_diet.demo.infra.adapters.repository.UserRepository;
 import org.springframework.stereotype.Service;
-
 import java.time.format.DateTimeFormatter;
 import java.util.*;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 @Service
 public class MealService {
@@ -31,10 +28,8 @@ public class MealService {
 
         List<Meal> meals = mealRepository.findAll();
 
-        // Formatter para extrair a data no formato desejado
         DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 
-        // Mapeia as refeições para MealDTOGet e agrupa por data
         Map<String, List<MealDTOGet>> mealsByDate = meals.stream()
                 .map(meal -> new MealDTOGet(
                         meal.getId(),
@@ -75,5 +70,26 @@ public class MealService {
         }
 
         mealRepository.deleteById(id);
+    }
+
+    public Map<String, Integer> getBestHealthyMealSequence(UUID userId) {
+        List<Meal> userMeals = mealRepository.findByUserId(userId);
+
+        int currentSequence = 0;
+        int maxSequence = 0;
+
+        for (Meal meal : userMeals) {
+            if (Boolean.TRUE.equals(meal.getIsHealthy())) {
+                currentSequence++;
+                maxSequence = Math.max(maxSequence, currentSequence);
+            } else {
+                currentSequence = 0;
+            }
+        }
+
+        Map<String, Integer> result = new HashMap<>();
+        result.put("bestHealthyMealSequence", maxSequence);
+
+        return result;
     }
 }
