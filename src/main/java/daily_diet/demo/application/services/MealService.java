@@ -1,6 +1,7 @@
 package daily_diet.demo.application.services;
 import daily_diet.demo.application.dto.MealDTO;
 import daily_diet.demo.application.dto.MealDTOGet;
+import daily_diet.demo.application.dto.MealDTOUpdate;
 import daily_diet.demo.application.services.erros.MealNotFoundError;
 import daily_diet.demo.application.services.erros.UserNotFoundError;
 import daily_diet.demo.domain.entities.Meal;
@@ -37,10 +38,11 @@ public class MealService {
                         meal.getDescription(),
                         meal.getIsHealthy(),
                         meal.getCreatedAt(),
+                        meal.getDate(),
                         meal.getUser().getId()
                 ))
                 .collect(Collectors.groupingBy(
-                        mealDTO -> mealDTO.getCreatedAt().toLocalDate().format(dateFormatter)
+                        mealDTO -> mealDTO.getDate().toLocalDate().format(dateFormatter)
                 ));
 
         return mealsByDate;
@@ -58,6 +60,7 @@ public class MealService {
         meal.setName(mealDTO.getName());
         meal.setDescription(mealDTO.getDescription());
         meal.setIsHealthy(mealDTO.getIsHealthy());
+        meal.setDate(mealDTO.getDate());
         meal.setUser(user.get());
         mealRepository.save(meal);
     }
@@ -92,4 +95,19 @@ public class MealService {
 
         return result;
     }
+
+        public void updateMeal(UUID id, MealDTOUpdate mealUpdate) {
+            Optional<Meal> mealOptional = mealRepository.findById(id);
+
+            if(mealOptional.isEmpty()) {
+                throw new MealNotFoundError();
+            }
+
+            Meal meal = new Meal();
+            meal.setName(mealUpdate.getName());
+            meal.setDescription(mealOptional.get().getDescription());
+            meal.setIsHealthy(mealOptional.get().getIsHealthy());
+
+            mealRepository.save(meal);
+        }
 }

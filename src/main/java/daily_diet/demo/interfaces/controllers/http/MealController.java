@@ -2,6 +2,7 @@ package daily_diet.demo.interfaces.controllers.http;
 
 import daily_diet.demo.application.dto.MealDTO;
 import daily_diet.demo.application.dto.MealDTOGet;
+import daily_diet.demo.application.dto.MealDTOUpdate;
 import daily_diet.demo.application.services.MealService;
 import daily_diet.demo.domain.entities.Meal;
 import daily_diet.demo.infra.adapters.repository.UserRepository;
@@ -47,5 +48,12 @@ public class MealController {
         Map<String, Integer> bestSequence = mealService.getBestHealthyMealSequence(id);
 
         return ResponseEntity.status(HttpStatus.OK).body(bestSequence);
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity update(@PathVariable UUID id, @RequestBody MealDTOUpdate meal) {
+        mealService.updateMeal(id, meal);
+
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
 }

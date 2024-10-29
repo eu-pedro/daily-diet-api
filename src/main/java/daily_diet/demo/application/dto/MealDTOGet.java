@@ -18,6 +18,7 @@ public class MealDTOGet {
         meal.setDescription(meal.getDescription());
         meal.setIsHealthy(meal.getIsHealthy());
         meal.setCreatedAt(meal.getCreatedAt());
+        meal.setDate(meal.getDate());
         meal.setId(meal.getId());
     }
     private UUID id;
@@ -25,5 +26,6 @@ public class MealDTOGet {
     private String description;
     private Boolean isHealthy;
     private LocalDateTime createdAt;
+    private LocalDateTime date;
     private UUID userId;
 }

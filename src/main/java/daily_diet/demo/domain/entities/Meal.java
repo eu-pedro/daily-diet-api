@@ -21,6 +21,9 @@ public class Meal {
     private String name;
 
     @Column(nullable = false)
+    private LocalDateTime date;
+
+    @Column(nullable = false)
     private String description;
 
     @Column(nullable = false)
