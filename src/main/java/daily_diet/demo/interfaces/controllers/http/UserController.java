@@ -1,6 +1,7 @@
 package daily_diet.demo.interfaces.controllers.http;
 
 import daily_diet.demo.application.dto.UserDTO;
+import daily_diet.demo.application.dto.UserRegisterDTO;
 import daily_diet.demo.application.services.UserService;
 import daily_diet.demo.domain.entities.User;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,12 +20,6 @@ public class UserController {
     @Autowired
     private UserService userService;
 
-    @PostMapping("")
-    public ResponseEntity create(@RequestBody UserDTO user) {
-        userService.createUser(user);
-        return ResponseEntity.status(HttpStatus.CREATED).build();
-    }
-
     @GetMapping("/{id}")
     public ResponseEntity<Optional<User>> getById(@PathVariable UUID id) {
         Optional<User> user = userService.findById(id);
@@ -34,7 +29,7 @@ public class UserController {
 
     @GetMapping()
     public ResponseEntity getAll() {
-        List<User> users =  userService.getAllUsers();
+        List<UserDTO> users =  userService.getAllUsers();
 
         return ResponseEntity.status(HttpStatus.OK).body(users);
     }
