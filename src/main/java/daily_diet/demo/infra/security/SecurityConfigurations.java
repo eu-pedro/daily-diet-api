@@ -22,16 +22,21 @@ public class SecurityConfigurations {
     @Autowired
     SecurityFilter securityFilter;
 
+    @Autowired
+    private CustomAuthenticationEntryPoint authenticationEntryPoint;
+
     @Bean
      public SecurityFilterChain configure(HttpSecurity http) throws Exception {
          return http
                  .csrf(AbstractHttpConfigurer::disable)
                  .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+
                  .authorizeHttpRequests(authorize -> authorize
                          .requestMatchers(HttpMethod.POST, "/auth/login", "/auth/register").permitAll()
                          .requestMatchers("/meal").authenticated()
                          .requestMatchers(HttpMethod.GET, "/user").authenticated()
                  )
+                 .httpBasic(httpSecurityHttpBasicConfigurer -> httpSecurityHttpBasicConfigurer.authenticationEntryPoint(authenticationEntryPoint))
                  .addFilterBefore(securityFilter, UsernamePasswordAuthenticationFilter.class)
                  .build();
      }
