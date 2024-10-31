@@ -11,8 +11,8 @@ import java.util.UUID;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class MealDTOGet {
-    public MealDTOGet(Meal meal) {
+public class MealGetDTO {
+    public MealGetDTO(Meal meal) {
         meal.setId(meal.getId());
         meal.setName(meal.getName());
         meal.setDescription(meal.getDescription());

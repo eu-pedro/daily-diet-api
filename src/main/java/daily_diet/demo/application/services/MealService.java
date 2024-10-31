@@ -1,7 +1,7 @@
 package daily_diet.demo.application.services;
-import daily_diet.demo.application.dto.MealDTO;
-import daily_diet.demo.application.dto.MealDTOGet;
-import daily_diet.demo.application.dto.MealDTOUpdate;
+import daily_diet.demo.application.dto.MealRegisterDTO;
+import daily_diet.demo.application.dto.MealGetDTO;
+import daily_diet.demo.application.dto.MealUpdateDTO;
 import daily_diet.demo.application.services.erros.MealNotFoundError;
 import daily_diet.demo.application.services.erros.UserNotFoundError;
 import daily_diet.demo.domain.entities.Meal;
@@ -31,8 +31,8 @@ public class MealService {
 
         DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 
-        Map<String, List<MealDTOGet>> mealsByDate = meals.stream()
-                .map(meal -> new MealDTOGet(
+        Map<String, List<MealGetDTO>> mealsByDate = meals.stream()
+                .map(meal -> new MealGetDTO(
                         meal.getId(),
                         meal.getName(),
                         meal.getDescription(),
@@ -49,7 +49,7 @@ public class MealService {
 
     }
 
-    public void createMeal (MealDTO mealDTO) {
+    public void createMeal (MealRegisterDTO mealDTO) {
         Optional<User> user = userRepository.findById(mealDTO.getUserId());
 
         if(user.isEmpty()) {
@@ -96,7 +96,7 @@ public class MealService {
         return result;
     }
 
-        public void updateMeal(UUID id, MealDTOUpdate mealUpdate) {
+        public void updateMeal(UUID id, MealUpdateDTO mealUpdate) {
             Optional<Meal> mealOptional = mealRepository.findById(id);
 
             if(mealOptional.isEmpty()) {
