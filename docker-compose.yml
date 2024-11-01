@@ -6,6 +6,6 @@ services:
       - '5432:5432'
     environment:
       - POSTGRES_USER=admin
-      - POSTGRES_PASSWORD=admin
-      - POSTGRES_DB=dailydiet
+      - POSTGRES_PASSWORD=XIdsYdRXn296kFJdHONaGgOXeU7QQJcN
+      - POSTGRES_DB=daily_diet_17it
 
