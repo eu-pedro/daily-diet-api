@@ -6,20 +6,6 @@ services:
       - '5432:5432'
     environment:
       - POSTGRES_USER=admin
-      - POSTGRES_PASSWORD=XIdsYdRXn296kFJdHONaGgOXeU7QQJcN
-      - POSTGRES_DB=daily_diet_17it
-
-  app:
-    build:
-      context: .
-      dockerfile: Dockerfile
-    ports:
-      - '8080:8080'
-    environment:
-      - SPRING_DATASOURCE_URL=postgresql://admin:XIdsYdRXn296kFJdHONaGgOXeU7QQJcN@dpg-csiblsrgbbvc73fj7560-a.ohio-postgres.render.com/daily_diet_17it
-      - SPRING_DATASOURCE_USERNAME=admin
-      - SPRING_DATASOURCE_PASSWORD=XIdsYdRXn296kFJdHONaGgOXeU7QQJcN
-      - JWT_SECRET=aiosdjaiosd
-    depends_on:
-      - postgres
+      - POSTGRES_PASSWORD=admin
+      - POSTGRES_DB=dailydiet
 
